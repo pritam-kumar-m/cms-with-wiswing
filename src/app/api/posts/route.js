@@ -1,12 +1,28 @@
 import prisma from "@/utils/db";
 import { handleSuccess, handleError } from "../../../services/commonService";
 
-// GET /api/posts - Get all posts or search by title/content
+// Get all posts or search by title/content
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search");
+    const page = parseInt(searchParams.get("page")) || 1;
+    const limit = parseInt(searchParams.get("limit")) || 10;
+    const skip = (page - 1) * limit;
 
+    // Fetch total count for pagination metadata
+    const totalPosts = await prisma.post.count({
+      where: search
+        ? {
+            OR: [
+              { title: { contains: search, mode: "insensitive" } },
+              { content: { contains: search, mode: "insensitive" } },
+            ],
+          }
+        : {},
+    });
+
+    // Fetch paginated posts
     const posts = await prisma.post.findMany({
       where: search
         ? {
@@ -17,19 +33,30 @@ export async function GET(request) {
           }
         : {},
       orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
     });
 
     const message = posts.length
       ? "Posts fetched successfully."
       : "No posts found.";
 
-    return handleSuccess(posts, message);
+    // Pagination metadata
+    const pagination = {
+      totalPosts,
+      currentPage: page,
+      totalPages: Math.ceil(totalPosts / limit),
+      hasNextPage: page * limit < totalPosts,
+      hasPrevPage: page > 1,
+    };
+
+    return handleSuccess({ posts, pagination }, message);
   } catch (error) {
     return handleError(error, "Error fetching posts.");
   }
 }
 
-// POST /api/posts - Create a new post
+// Create a new post
 export async function POST(request) {
   try {
     const { title, slug, content } = await request.json();
@@ -59,7 +86,7 @@ export async function POST(request) {
   }
 }
 
-// PUT /api/posts - Update an existing post
+// Update an existing post
 export async function PUT(request) {
   try {
     const { id, title, slug, content } = await request.json();
@@ -86,7 +113,7 @@ export async function PUT(request) {
   }
 }
 
-// DELETE /api/posts/:id - Delete a post by ID
+//Delete a post by ID
 export async function DELETE(request) {
   try {
     const urlParts = request.url.split("=");

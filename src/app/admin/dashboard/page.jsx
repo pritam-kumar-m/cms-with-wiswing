@@ -9,7 +9,7 @@ const Dashboard = () => {
         Dashboard
       </Typography>
       <Typography variant="body1">
-        Welcome to the admin dashboard!
+        Welcome to the CMS dashboard!
       </Typography>
     </>
   );

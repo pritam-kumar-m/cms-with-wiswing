@@ -10,11 +10,11 @@ const theme = createTheme({
       main: '#f50057',
     },
   },
-  typography: {
-    h6: {
-      fontWeight: 600,
-    },
-  },
+  // typography: {
+  //   h6: {
+  //     fontWeight: 600,
+  //   },
+  // },
 });
 
 export default theme;

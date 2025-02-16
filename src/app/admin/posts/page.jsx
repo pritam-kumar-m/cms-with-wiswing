@@ -17,17 +17,26 @@ export default function PostsPage() {
   const [posts, setPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0, // DataGrid uses 0-based indexing for pages
+    pageSize: 10, // Default page size
+  });
+  const [rowCount, setRowCount] = useState(0); // Total number of rows
 
   useEffect(() => {
     fetchPosts();
-  }, [searchQuery]);
+  }, [searchQuery, paginationModel.page, paginationModel.pageSize]);
 
   const fetchPosts = async () => {
     setLoading(true);
-    const url = `/api/posts?search=${searchQuery}`;
+    const url = `/api/posts?search=${searchQuery}&page=${
+      paginationModel.page + 1
+    }&limit=${paginationModel.pageSize}`;
     const response = await fetch(url);
     const data = await response.json();
-    setPosts(data.data);
+    setPosts(data.data.posts);
+    console.log("data.data.pagination.totalPosts", data);
+    setRowCount(data.data.pagination.totalPosts); // Set total row count for pagination
     setLoading(false);
   };
 
@@ -52,6 +61,7 @@ export default function PostsPage() {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
   const columns = [
     {
       field: "title",
@@ -65,7 +75,7 @@ export default function PostsPage() {
             href={`posts/${id}/preview`}
             style={{ textDecoration: "none", color: "#1976d2" }}
           >
-            {title} - Preview
+            {title}
           </a>
         );
       },
@@ -121,7 +131,7 @@ export default function PostsPage() {
   ];
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box>
       <Typography
         variant="h4"
         sx={{ mb: 3, fontWeight: "bold", color: "primary.main" }}
@@ -163,19 +173,23 @@ export default function PostsPage() {
             </Box>
           </Box>
         ) : (
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "100%", height: 600 }}>
             <DataGrid
               rows={posts}
               columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5, 10, 20]}
+              paginationMode="server" // Enable server-side pagination
+              rowCount={rowCount} // Total number of rows
+              pageSizeOptions={[5, 10, 20]}
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
+              loading={loading}
               disableColumnMenu
               autoHeight
             />
           </Box>
         )}
       </Paper>
-      <ToastContainer/>
+      <ToastContainer />
     </Box>
   );
 }

@@ -1,5 +1,6 @@
 {
   "rules": {
+    "type": "module",
     "@next/next/no-unsupported-features": "off",
     "react-hooks/exhaustive-deps": "off"
   }

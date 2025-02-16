@@ -4,11 +4,11 @@ import prisma from "@/utils/db";
 // GET /api/posts/[id] - Get a single post by ID
 export async function GET(request, { params }) {
   try {
-    const { id } =await params;
+    const { id } = params;
 
     // Fetch the post by ID
     const post = await prisma.post.findUnique({
-      where: { id: String(id) }, 
+      where: { id: String(id) },
     });
 
     if (!post) {

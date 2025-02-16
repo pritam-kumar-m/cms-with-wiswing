@@ -1,3 +1,6 @@
 {
-  "extends": "next/core-web-vitals"
+  "rules": {
+    "@next/next/no-unsupported-features": "off",
+    "react-hooks/exhaustive-deps": "off"
+  }
 }

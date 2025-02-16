@@ -1,0 +1,36 @@
+{
+  "name": "cms-with-wiswing",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^4.1.0",
+    "@mui/icons-material": "^6.4.4",
+    "@mui/material": "^6.4.4",
+    "@mui/x-data-grid": "^7.26.0",
+    "@prisma/client": "^6.3.1",
+    "dompurify": "^3.2.4",
+    "joy": "^0.1.1",
+    "next": "15.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2",
+    "react-toastify": "^11.0.3",
+    "suneditor": "^2.47.5",
+    "suneditor-react": "^3.6.1",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "15.0.1",
+    "postcss": "^8",
+    "prisma": "^6.3.1",
+    "tailwindcss": "^3.4.1"
+  }
+}

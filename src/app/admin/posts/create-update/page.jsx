@@ -1,7 +1,7 @@
 "use client";
 
 // react**
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 // next **
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,10 +19,10 @@ import SunEditorComponent from "../../../../components/Editor/SunEditorComponent
 // mui **
 import { TextField, Button, Box, Typography, Grid } from "@mui/material";
 
-export default function PostForm() {
+function PostFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id"); 
+  const id = searchParams.get("id");
   const isEdit = !!id;
 
   // use state
@@ -32,7 +32,7 @@ export default function PostForm() {
   const generateSlug = (text) => {
     return text
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") 
+      .replace(/[^a-z0-9\s-]/g, "")
       .trim()
       .replace(/\s+/g, "-");
   };
@@ -67,7 +67,7 @@ export default function PostForm() {
         .then((data) => {
           setValue("title", data.title);
           setValue("slug", data.slug);
-          setValue("content", data.content || ""); 
+          setValue("content", data.content || "");
           setcontent(data.content);
         })
         .catch((error) => {
@@ -100,7 +100,7 @@ export default function PostForm() {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      console.log("result----Content-Type",result)
+      console.log("result----Content-Type", result);
       if (result.success) {
         toast.success(
           isEdit ? "Post updated successfully!" : "Post added successfully!",
@@ -111,7 +111,7 @@ export default function PostForm() {
         );
         setTimeout(() => {
           router.push("/admin/posts");
-        }, 3000); 
+        }, 3000);
       } else {
         toast.error("Failed to save post. Please try again.", {
           position: "top-right",
@@ -164,7 +164,7 @@ export default function PostForm() {
       {/* SunEditor Component */}
       <Box sx={{ mt: 2, mb: 2 }}>
         <SunEditorComponent
-          key={getValues("content")} 
+          key={getValues("content")}
           value={content}
           onChange={(content) => setValue("content", content)}
         />
@@ -189,5 +189,13 @@ export default function PostForm() {
       </Grid>
       <ToastContainer />
     </Box>
+  );
+}
+
+export default function PostForm() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PostFormContent />
+    </Suspense>
   );
 }

@@ -81,7 +81,7 @@ function PostFormContent() {
     const newTitle = e.target.value;
 
     const newSlug = generateSlug(newTitle);
-    const currentSlug = getValues("slug");
+    // const currentSlug = getValues("slug");
     setValue("slug", newSlug);
   };
 

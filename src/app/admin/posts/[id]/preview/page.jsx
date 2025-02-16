@@ -5,11 +5,17 @@ import { useParams } from "next/navigation";
 import DOMPurify from "dompurify";
 import { Box, CircularProgress, Typography } from "@mui/material";
 
+// custom components
+import ContentBlock from "../../../../../components/ContentBlock";
+
+// import static data
+import { SLIDER_STATIC_DATA } from "../../../../../../static/static.json";
+
 export default function PreviewPage() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch(`/api/posts/${id}`)
@@ -78,6 +84,11 @@ export default function PreviewPage() {
   return (
     <div>
       <h1>{post.title}</h1>
+      <div>
+        {SLIDER_STATIC_DATA.map((block, index) => (
+          <ContentBlock key={index} type={block.type} props={block.props} />
+        ))}
+      </div>
       <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
     </div>
   );

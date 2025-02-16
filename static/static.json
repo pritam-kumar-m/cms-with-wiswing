@@ -1,7 +1,20 @@
 {
-    "post_content":{
-        "title": "sdfjsdfjhsdfsd",
-        "slug": "sjdhfjhsdf",
-        "content": "<ul><li>sdbfjfjhsjhxcxcv</li><li>sbdfjhgjdgf</li><li>mdhfgjhsgdfj</li><li>sdmfhjsdghf</li><li>smdfjshdgf</li><li>skdhfkhsd</li></ul>"
-    }
+    "SLIDER_STATIC_DATA": [
+        {
+            "type": "slider",
+            "props": {
+                "images": [
+                    "https://res.cloudinary.com/day9xmen6/image/upload/v1697298307/cld-sample-2.jpg",
+                    "https://res.cloudinary.com/day9xmen6/image/upload/v1697298268/sample.jpg",
+                    "https://res.cloudinary.com/day9xmen6/image/upload/v1697298307/cld-sample-3.jpg"
+                ],
+                "settings": {
+                    "autoplay": true,
+                    "autoplaySpeed": 5000,
+                    "dots": false,
+                    "arrows": true
+                }
+            }
+        }
+    ]
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // Custom arrow components
 const NextArrow = (props) => {
@@ -13,15 +13,17 @@ const NextArrow = (props) => {
       className={className}
       style={{
         ...style,
-        display: "block",
-        background: "rgba(0, 0, 0, 0.6)",
-        borderRadius: "50%",
-        width: "40px",
-        height: "40px",
-        right: "10px",
+        display: 'block',
+        background: 'rgba(0, 0, 0, 0.6)',
+        borderRadius: '50%',
+        width: '40px',
+        height: '40px',
+        right: '10px',
         zIndex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        // eslint-disable-next-line no-dupe-keys
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       onClick={onClick}
     >
@@ -45,15 +47,17 @@ const PrevArrow = (props) => {
       className={className}
       style={{
         ...style,
-        display: "block",
-        background: "rgba(0, 0, 0, 0.6)",
-        borderRadius: "50%",
-        width: "40px",
-        height: "40px",
-        left: "10px",
+        display: 'block',
+        background: 'rgba(0, 0, 0, 0.6)',
+        borderRadius: '50%',
+        width: '40px',
+        height: '40px',
+        left: '10px',
         zIndex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        // eslint-disable-next-line no-dupe-keys
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       onClick={onClick}
     >
@@ -71,7 +75,6 @@ const PrevArrow = (props) => {
 };
 
 const SliderPlugin = ({ images, settings }) => {
-  
   // Default settings for the slider
   const defaultSettings = {
     dots: true,
@@ -81,16 +84,13 @@ const SliderPlugin = ({ images, settings }) => {
     slidesToScroll: 1,
     autoplay: true, 
     autoplaySpeed: 3000, 
-    nextArrow: <NextArrow />,
+    nextArrow: <NextArrow />, 
     prevArrow: <PrevArrow />, 
     ...settings, 
   };
 
   return (
-    <div
-      className="slider-plugin"
-      style={{ maxWidth: "100%", margin: "0 auto", padding: "0 20px" }}
-    >
+    <div className="slider-plugin" style={{ maxWidth: '100%', margin: '0 auto', padding: '0 20px' }}>
       <Slider {...defaultSettings}>
         {images.map((image, index) => (
           <div key={index}>
@@ -98,11 +98,11 @@ const SliderPlugin = ({ images, settings }) => {
               src={image}
               alt={`Slide ${index}`}
               style={{
-                width: "100%",
-                height: "450px",
-                objectFit: "cover",
-                borderRadius: "12px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                width: '100%',
+                height: '400px',
+                objectFit: 'cover',
+                borderRadius: '12px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
               }}
             />
           </div>
